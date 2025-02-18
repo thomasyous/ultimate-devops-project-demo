@@ -22,32 +22,36 @@ jobs:
           uses: actions/setup-go@v2
           with:
             go-version: 1.22
-          id: go
           
         - name: Build
-          run: 
+          run: |
                cd src/product-catalog
-               download go mod
-               go build -o product-catalog
+               go mod download
+               go build -o product-catalog 
          
         - name: Perform unit test
-          run:
+          run: |
               cd src/product-catalog
-              go test -v ./...
-              
-    code-quality-check:
+              go test -v ./...             
+    
+    code-quality:
         
         runs-on: ubuntu-latest
         
         steps:
         - name: Checkout code
           uses: actions/checkout@v4
+
+        - name: Set up Go 1.22
+          uses: actions/setup-go@v2
+          with:
+            go-version: 1.22  
           
         - name: Run golangci-lint
-          run: 
-              install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.56.2
-              cd src/product-catalog ./...
-              golangci-lint run 
+          uses: golangci/golangci-lint-action@v6
+          with:
+            version: v1.52.2
+            working-directory: src/product-catalog 
         
     docker:
         
@@ -76,7 +80,7 @@ jobs:
             push: true
             tags: ${{ secrets.DOCKER_USERNAME }}/product-catalog:${{ github.run_id}}  
 
-    k8s-update: 
+    updatek8s: 
         
         runs-on: ubuntu-latest
 
