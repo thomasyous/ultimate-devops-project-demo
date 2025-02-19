@@ -90,7 +90,7 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v4
           with:
-             token: ${{ secrets.GITHUB_TOKEN }} 
+             token: ${{ secrets.TOKEN }} 
              
         - name: Upadate image tag in k8s deployment menifest file
           run: |
