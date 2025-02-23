@@ -59,23 +59,28 @@ func init() {
 	catalog, err = readProductFiles()
 	if err != nil {
 		log.Fatalf("Reading Product Files: %v", err)
-		os.Exit(1)
 	}
 }
 
 func initResource() *sdkresource.Resource {
 	initResourcesOnce.Do(func() {
-		extraResources, _ := sdkresource.New(
+		extraResources, err := sdkresource.New(
 			context.Background(),
 			sdkresource.WithOS(),
 			sdkresource.WithProcess(),
 			sdkresource.WithContainer(),
 			sdkresource.WithHost(),
 		)
-		resource, _ = sdkresource.Merge(
+		if err != nil {
+			log.Fatalf("Failed to create extra resources: %v", err)
+		}
+		resource, err = sdkresource.Merge(
 			sdkresource.Default(),
 			extraResources,
 		)
+		if err != nil {
+			log.Fatalf("Failed to merge resources: %v", err)
+		}
 	})
 	return resource
 }
@@ -128,6 +133,7 @@ func main() {
 		}
 		log.Println("Shutdown meter provider")
 	}()
+
 	openfeature.AddHooks(otelhooks.NewTracesHook())
 	err := openfeature.SetProvider(flagd.NewProvider())
 	if err != nil {
@@ -141,7 +147,7 @@ func main() {
 
 	svc := &productCatalog{}
 	var port string
-	mustMapEnv(&port, "PRODUCT_CATALOG_PORT")
+	mustMapEnv(&port, "PRODUCT_CATALOG_PORT", "8080") // Default port 8080
 
 	log.Infof("Product Catalog gRPC server started on port: %s", port)
 
@@ -179,11 +185,9 @@ type productCatalog struct {
 }
 
 func readProductFiles() ([]*pb.Product, error) {
-
-	// find all .json files in the products directory
 	entries, err := os.ReadDir("./products")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read products directory: %w", err)
 	}
 
 	jsonFiles := make([]fs.FileInfo, 0, len(entries))
@@ -191,38 +195,38 @@ func readProductFiles() ([]*pb.Product, error) {
 		if strings.HasSuffix(entry.Name(), ".json") {
 			info, err := entry.Info()
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to get file info: %w", err)
 			}
 			jsonFiles = append(jsonFiles, info)
 		}
 	}
 
-	// read the contents of each .json file and unmarshal into a ListProductsResponse
-	// then append the products to the catalog
 	var products []*pb.Product
 	for _, f := range jsonFiles {
 		jsonData, err := os.ReadFile("./products/" + f.Name())
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to read file %s: %w", f.Name(), err)
 		}
 
 		var res pb.ListProductsResponse
 		if err := protojson.Unmarshal(jsonData, &res); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to unmarshal JSON: %w", err)
 		}
 
 		products = append(products, res.Products...)
 	}
 
 	log.Infof("Loaded %d products", len(products))
-
 	return products, nil
 }
 
-func mustMapEnv(target *string, key string) {
+func mustMapEnv(target *string, key string, defaultValue string) {
 	value, present := os.LookupEnv(key)
 	if !present {
-		log.Fatalf("Environment Variable Not Set: %q", key)
+		if defaultValue == "" {
+			log.Fatalf("Environment Variable Not Set: %q", key)
+		}
+		value = defaultValue
 	}
 	*target = value
 }
@@ -237,7 +241,6 @@ func (p *productCatalog) Watch(req *healthpb.HealthCheckRequest, ws healthpb.Hea
 
 func (p *productCatalog) ListProducts(ctx context.Context, req *pb.Empty) (*pb.ListProductsResponse, error) {
 	span := trace.SpanFromContext(ctx)
-
 	span.SetAttributes(
 		attribute.Int("app.products.count", len(catalog)),
 	)
@@ -250,7 +253,6 @@ func (p *productCatalog) GetProduct(ctx context.Context, req *pb.GetProductReque
 		attribute.String("app.product.id", req.Id),
 	)
 
-	// GetProduct will fail on a specific product when feature flag is enabled
 	if p.checkProductFailure(ctx, req.Id) {
 		msg := fmt.Sprintf("Error: Product Catalog Fail Feature Flag Enabled")
 		span.SetStatus(otelcodes.Error, msg)
@@ -303,9 +305,13 @@ func (p *productCatalog) checkProductFailure(ctx context.Context, id string) boo
 	}
 
 	client := openfeature.NewClient("productCatalog")
-	failureEnabled, _ := client.BooleanValue(
+	failureEnabled, err := client.BooleanValue(
 		ctx, "productCatalogFailure", false, openfeature.EvaluationContext{},
 	)
+	if err != nil {
+		log.Errorf("Failed to evaluate feature flag: %v", err)
+		return false
+	}
 	return failureEnabled
 }
 
@@ -315,8 +321,3 @@ func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error)
 		grpc.WithStatsHandler(otelgrpc.NewClientHandler()),
 	)
 }
-
-
-
-
-

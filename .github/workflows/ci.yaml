@@ -77,7 +77,7 @@ jobs:
             tags: ${{ secrets.DOCKER_USERNAME }}/product-catalog:${{github.run_id}}
 
     
-    updatek8s:
+    updatek8s:  
         runs-on: ubuntu-latest
 
         needs: docker
@@ -94,15 +94,11 @@ jobs:
         
         - name: Commit and push changes
           run: |
-            git config --global user.email "abhishek@gmail.com"
-            git config --global user.name "Abhishek Veeramalla"
+            git config --global user.email "msdhivakar92@gmail.com"
+            git config --global user.name "Dhivakar03"
             git add kubernetes/productcatalog/deploy.yaml
             git commit -m "[CI]: Update product catalog image tag"
             git push origin HEAD:main -f
 
-        
-        
-          
+            
 
-
-        
