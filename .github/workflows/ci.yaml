@@ -25,10 +25,15 @@ jobs:
         #     go mod download
         #     go build -o product-catalog-service main.go
 
-        - name: unit tests
+        - name: Install dependencies
+            run: |
+                pip install pytest  
+
+        - name: Run unit tests
           run: |
             cd src/recommendation
             pytest
+
     
     code-quality:
         runs-on: ubuntu-latest
