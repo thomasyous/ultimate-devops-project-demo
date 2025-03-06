@@ -36,7 +36,7 @@ The OpenTelemetry demo consists of multiple microservices like checkout, payment
 - **Project Overview & Architecture**
 
 <p align="center">
-  <img src="DevOps/Images/System_Architect.drawio.svg" alt="Project Architecture" width="600"/>
+  <img src="Images/System_Architect.drawio.svg" alt="Project Architecture" width="600"/>
 </p>
 
 ## Project Structure 
@@ -90,11 +90,11 @@ OpenTelemetry-Ecommerce-Demo
     └── tracetesting
 ```
 <p align="center">
-  <img src="DevOps/Images/Structure.png" alt="Architecture" width="600"/>
+  <img src="Images/Structure.png" alt="Architecture" width="600"/>
 </p>
 
 <p align="center">
-  <img src="DevOps/Images/Lang.png" alt="" width="600"/>
+  <img src="Images/Lang.png" alt="" width="600"/>
 </p>
 
 - **Terraform & Kubernetes Setup**
@@ -103,12 +103,12 @@ Using terraform we create GCP resources GKE (Google Kubernetes Engine) and confi
 
 - **CI/CD Pipeline Explanation**
 <p align="center">
-  <img src="DevOps/Images/CI-CD Flow.drawio.svg" alt="CICD Workflow" width="600"/>
+  <img src="Images/CI-CD Flow.drawio.svg" alt="CICD Workflow" width="600"/>
 </p>
 ---
 ✍  [Bharat Suthar](https://github.com/bharatsutharx)
 
-🔗 **GitHub Repo:** _[To be added after pushing]_
+🔗 **GitHub Repo:** [https://github.com/bharatsutharx/OpenTelemetry-Ecommerce-Demo]
 
 
 ## 🛡️ License
