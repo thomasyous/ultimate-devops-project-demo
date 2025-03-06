@@ -140,8 +140,3 @@ Emeritus:
 [Tracetest]: https://github.com/kubeshop/opentelemetry-demo
 [Uptrace]: https://github.com/uptrace/uptrace/tree/master/example/opentelemetry-demo
 
-## DevOps Practices 
-
-This project includes improvements in CI/CD, infrastructure.
-
-📌 **Check out the DevOps setup here:** [DevOps Documentation](DevOps/README.md)
