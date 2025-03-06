@@ -73,6 +73,7 @@ jobs:
             context: src/recommendation
             file: src/recommendation/Dockerfile
             push: true
+            
             tags: ${{ secrets.DOCKER_USERNAME }}/recommendation:${{github.run_id}}
 
     
