@@ -25,10 +25,11 @@ jobs:
         #     go mod download
         #     go build -o product-catalog-service main.go
 
-        - name: Install dependencies
-            run: |
-            
-              pip install pytest  
+       - name: Install dependencies
+         run: |
+            python -m pip install --upgrade pip  # ✅ Upgrade pip
+            python -m pip install pytest  # ✅ Install pytest correctly
+
 
         - name: Run unit tests
           run: |
