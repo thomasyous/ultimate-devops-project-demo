@@ -28,7 +28,7 @@ jobs:
         - name: unit tests
           run: |
             cd src/recommendation
-            pytest ./...
+            pytest
     
     code-quality:
         runs-on: ubuntu-latest
