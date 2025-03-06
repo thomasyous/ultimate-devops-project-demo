@@ -1,0 +1,14 @@
+--2025-03-01 00:50:27--  https://hub.docker.com/_/busybox
+Resolving hub.docker.com (hub.docker.com)... 100.29.167.200, 54.156.14.194, 54.208.73.48, ...
+Connecting to hub.docker.com (hub.docker.com)|100.29.167.200|:443... failed: Connection timed out.
+Connecting to hub.docker.com (hub.docker.com)|54.156.14.194|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘busybox’
+
+     0K .......... .......... .......... .......... .......... 78.1K
+    50K .......... .......... .......... .......... .......... 14.2M
+   100K                                                         771G=0.6s
+
+2025-03-05 15:54:59 (156 KB/s) - ‘busybox’ saved [102814]
+
