@@ -95,8 +95,7 @@ jobs:
 
       - name: Update tag in k8s deployment manifest 
         run: |
-          sed -i 's/image: .*/image: ${{ vars.DOCKERHUB_USERNAME }}/product-catalog:${{ github.run_id }}/g' kubernetes/productcatalog/deploy.yaml 
-
+          sed -i "s|image: .*|image: ${{ vars.DOCKERHUB_USERNAME }}/product-catalog:${{ github.run_id }}|g" kubernetes/productcatalog/deploy.yaml
 
       - name: Commit and push changes
         run: |
@@ -104,7 +103,7 @@ jobs:
           git config --global user.name "Samuel Albershtein"
           git add kubernetes/productcatalog/deploy.yaml
           git commit -m "[CI]: Update product-catalog-service image tag"
-          git push origin main
+          git push origin HEAD:main
 
         
 
