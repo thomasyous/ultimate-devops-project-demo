@@ -1,0 +1,5 @@
+loki:
+  storage_config:
+    aws:
+      bucketNames:
+        chunks: "diva-s3-demo-tf"
