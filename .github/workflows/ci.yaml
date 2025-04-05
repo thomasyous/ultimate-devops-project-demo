@@ -73,7 +73,7 @@ jobs:
           - name: checkout code
             uses: actions/checkout@v4
             with:
-              token: ${{ secrets.GITHUB_TOKEN }}
+              token: ${{ secrets.TOKEN }}
           - name: Update tag in kubernates deployment manifest 
             run: |
                 sed -i 's/image: .*/image: ${{ secrets.DOCKER_USERNAME }}/product-catalog: ${{github.run_id}}' kubernetes/productcatalog/deploy.yaml
@@ -171,7 +171,7 @@ jobs:
 #         - name: checkout code
 #           uses: actions/checkout@v4
 #           with:
-#             token: ${{ secrets.GITHUB_TOKEN }}
+#             token: ${{ secrets.TOKEN }}
 
 #         - name: Update tag in kubernetes deployment manifest
 #           run: | 
