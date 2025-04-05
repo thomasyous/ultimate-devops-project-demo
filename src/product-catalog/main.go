@@ -172,6 +172,7 @@ func main() {
 
 	srv.GracefulStop()
 	log.Println("Product Catalog gRPC server stopped")
+	log.Println("Product Catalog gRPC server stopped")
 }
 
 type productCatalog struct {
