@@ -57,7 +57,7 @@ test/tracetesting/tracetesting-vars.yaml
 !src/currency/build
 
 # Local .terraform directories
-**/.terraform/*
+terraform-EKS/backend/.terraform/*
 
 # .tfstate files
 *.tfstate
