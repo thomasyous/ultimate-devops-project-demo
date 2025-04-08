@@ -80,6 +80,6 @@ jobs:
                     git config --global user.email "lavkeshtpatil@gmai.com"
                     git config --global user.name "lavkeshtpatil"
                     git add ./k8s/deployment.yaml
-                    git commit -m "update image tag to image tag"
+                    git commit -m "update image tag to image tags"
                     git push
                     
