@@ -63,6 +63,7 @@ terraform-EKS/backend/.terraform/*
 *.tfstate
 *.tfstate.*
 .terraform.lock.hcl
+*/.terraform/
 
 # Crash log files
 crash.log
