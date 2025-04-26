@@ -316,7 +316,11 @@ func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error)
 	)
 }
 
-
-
-
-
+func getProductCatalogClient(ctx context.Context, svcAddr string) (pb.ProductCatalogServiceClient, error) {
+	conn, err := createClient(ctx, svcAddr)
+	if err != nil {
+		return nil, fmt.Errorf("creating client connection: %w", err)
+	}
+	client := pb.NewProductCatalogServiceClient(conn)
+	return client, nil
+}
