@@ -327,8 +327,3 @@ public final class AdService {
   }
 }
 
-
-
-
-
-
