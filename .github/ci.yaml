@@ -13,15 +13,14 @@ jobs:
       - name: setup jdk 
         uses: actions/setup-java@v4
         with:
-          java-version: '21.0'
-          distribution: 'temurin'
+          java-version: '21'
           architecture: x64
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+        uses: gradle/actions/setup-gradle@v4 # v4.0.0
 
       - name: Build with Gradle
-        run: ./gradlew -b src/ad/ci.gradle package
+        run:  ./gradlew build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
