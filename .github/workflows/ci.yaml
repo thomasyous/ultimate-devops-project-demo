@@ -6,6 +6,7 @@ on:
     pull_request:
         branches:
         - main
+        
 
 jobs:
     build:
@@ -33,6 +34,7 @@ jobs:
     
     code-quality:
         runs-on: ubuntu-latest
+        needs: build
 
         steps:
         - name: checkout code
@@ -52,7 +54,7 @@ jobs:
 
     docker:
         runs-on: ubuntu-latest
-
+        
         needs: build
 
         steps:
@@ -94,14 +96,18 @@ jobs:
         
         - name: Commit and push changes
           run: |
-            git config --global user.email "abhishek@gmail.com"
-            git config --global user.name "Abhishek Veeramalla"
+            git config --global user.email "manik.singhal310@gmail.com"
+            git config --global user.name "Manik Singhal"
             git add kubernetes/productcatalog/deploy.yaml
             git commit -m "[CI]: Update product catalog image tag"
             git push origin HEAD:main -f
 
         
         
+
+
+
+
           
 
 
