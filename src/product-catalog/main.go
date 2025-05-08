@@ -232,7 +232,7 @@ func (p *productCatalog) Check(ctx context.Context, req *healthpb.HealthCheckReq
 }
 
 func (p *productCatalog) Watch(req *healthpb.HealthCheckRequest, ws healthpb.Health_WatchServer) error {
-	return status.Errorf(codes.Unimplemented, "health check via Watch not implemented")
+	return status.Errorf(codes.Unimplemented, "health check via Watch not implementeddd")
 }
 
 func (p *productCatalog) ListProducts(ctx context.Context, req *pb.Empty) (*pb.ListProductsResponse, error) {
