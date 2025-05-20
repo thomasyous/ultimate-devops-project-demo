@@ -1,7 +1,7 @@
 # This workflow is triggered on pull requests to the main branch.
 name: product-catalog-ci
 on:
-    push:
+    pull_request:
         branches:
         - main
 
