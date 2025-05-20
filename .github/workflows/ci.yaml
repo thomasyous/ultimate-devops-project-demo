@@ -20,7 +20,7 @@ jobs:
               run: |
                 cd src/product-catalog
                 go mod download
-                go build -0 product-catalog-service main.go
+                go build -o product-catalog-service main.go
 
             - name: Run unit test
               run: |
