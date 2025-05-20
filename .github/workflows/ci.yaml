@@ -1,7 +1,7 @@
 # This workflow is triggered on pull requests to the main branch.
 name: product-catalog-ci
 on:
-    pull_request:
+    push:
         branches:
         - main
 
@@ -33,6 +33,11 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+
+            - name: setup Go 1.22
+              uses: actions/setup-go@v4
+              with:
+                go-version: 1.22
             - name: Run golangci-lint
               run: 
                 go run github.com/golangci/golangci-lint/cmd/golangci-lint@v1.56.2
@@ -60,7 +65,7 @@ jobs:
               uses: docker/build-push-action@v6
               with:
                 context: src/product-catalog
-                file: Dockerfile
+                file: src/product-catalog/Dockerfile
                 push: true
                 tags: ${{ secrets.DOCKER_USERNAME }}/product-catalog:${{ github.run_id }}
 
