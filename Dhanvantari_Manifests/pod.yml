@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod 
+metadata: 
+  name: dhanvantari-pod
+  labels:
+    project: dhanvantari 
+spec:
+  containers:
+    - name: dhanvantari-container
+      image: 637423582993.dkr.ecr.us-west-2.amazonaws.com/dhanvantari/project-images:latest
