@@ -17,11 +17,17 @@ jobs:
         with:
           go-version: 1.22
 
+
       - name: Build
-        run: go build -o product-catalog-service src/product-catalog-service/main.go
+        run: |
+          cd src/product-catalog
+          go mod download
+          go build -o product-catalog-service main.go
 
       - name: Run unit tests
-        run: go test src/product-catalog-service/...
+        run: |
+          cd src/product-catalog
+          go test ./...
   
   code-quality:
     runs-on: ubuntu-latest
