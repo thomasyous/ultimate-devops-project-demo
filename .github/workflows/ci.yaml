@@ -91,5 +91,5 @@ jobs:
           git config --local user.name "kiranbakale"
           git config --local user.email "kiranbakale9@gmail.com"
           git add kubernetes/productcatalog/deploy.yaml
-          git commit -m "[CI]: Update product catalog image tag"
+          git commit -m "[CI]: Update product catalog image tags"
           git push
