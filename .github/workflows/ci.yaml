@@ -1,6 +1,10 @@
 # CI for Product Catalog Service
 
 name: product-catalog-ci
+on:
+  push:
+    branches:
+      - githubcicheck
 
 on: 
     pull_request:
