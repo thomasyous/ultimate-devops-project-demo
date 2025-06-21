@@ -1,13 +1,13 @@
 # CI for Product Catalog Service
 
 name: product-catalog-ci
-on:
+
+
+on: 
   push:
     branches:
       - githubcicheck
-
-on: 
-    pull_request:
+  pull_request:
         branches:
         - githubcicheck
 
@@ -69,7 +69,7 @@ jobs:
         - name: Login to Docker
           uses: docker/login-action@v3
           with:
-            username: ${{ secrets.DOCKER_USER_RNAME }}
+            username: ${{ secrets.DOCKER_USER_NAME }}
             password: ${{ secrets.DOCKER_TOKEN }}
 
         - name: Docker Push
