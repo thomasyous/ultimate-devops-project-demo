@@ -316,6 +316,8 @@ func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error)
 	)
 }
 
+// Dummy ci test to ensure the code compiles
+
 
 
 
