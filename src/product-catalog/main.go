@@ -77,7 +77,7 @@ func initResource() *sdkresource.Resource {
 			extraResources,
 		)
 	})
-	return resource
+	return resource;
 }
 
 func initTracerProvider() *sdktrace.TracerProvider {
@@ -315,6 +315,12 @@ func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error)
 		grpc.WithStatsHandler(otelgrpc.NewClientHandler()),
 	)
 }
+
+
+
+
+
+
 
 
 
