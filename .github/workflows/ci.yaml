@@ -99,3 +99,6 @@ jobs:
         git add kubernetes/productcatalog/deploy.yaml
         git commit -m "[CI] : Update product catalog image tag "
         git push origin HEAD:main -f
+
+    - name: Check what files were committed
+      run: git show --name-only
