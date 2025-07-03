@@ -1,0 +1,65 @@
+1. Core DevOps & Platform Engineering Skills
+Kubernetes (K8s)
+Managing, upgrading, and automating deployments across multiple clusters and environments.
+
+ArgoCD & GitOps
+Git-based application delivery, environment-based syncing, Helm/manifest management.
+
+Infrastructure as Code (IaC)
+Primarily Terraform, optionally Crossplane, for cloud provisioning.
+
+Cloud Platforms (at least one)
+✅ AWS (preferred)
+✅ GCP / Azure also relevant
+Strong understanding of EC2, IAM, VPC, EKS, S3, etc.
+
+CI/CD Pipelines
+Full pipeline design, build-test-deploy stages using Jenkins, GitHub Actions, GitLab CI.
+
+🧠 2. SRE / System Reliability Concepts
+SLI/SLOs, MTTR, high availability strategies
+Focus on uptime, incident resolution, and service-level metrics.
+
+Monitoring & Observability
+Tools: Prometheus, Grafana, Loki, Alertmanager, CloudWatch
+Experience building alerts, custom dashboards, log aggregation, and tracing.
+
+Incident Response & Root Cause Analysis
+Real-world experience handling production outages or critical system failures.
+
+👨‍💻 3. Programming / Scripting
+Golang (Mandatory)
+Building platform tools, controllers, and automation scripts.
+
+Shell scripting & Python (Bonus)
+For task automation, log handling, and quick operational tooling.
+
+🔐 4. Access & Security
+IAM, SSO, and RBAC
+Managing secure access across cloud and Kubernetes (e.g., via Keycloak, OIDC).
+
+Secrets Management
+Using K8s secrets, Vault, or cloud-native alternatives securely.
+
+🔄 5. Soft Skills & Engineering Mindset
+Collaboration & Communication
+Cross-functional team alignment, async communication (remote-first setup).
+
+Open Source Familiarity (Plus Point)
+Contributions or usage of Kubernetes ecosystem tools (e.g., Cluster API, ArgoCD).
+
+Growth & Initiative
+Willingness to work on complex infrastructure at scale and contribute to internal tooling/platform design.
+
+🎯 Summary Table
+Category	Tools/Skills
+Kubernetes	EKS, kubeadm, Helm, multi-cluster
+GitOps	ArgoCD, Git, Helm
+IaC	Terraformplane (bonus)
+Cloud	AWS (required), GCP/Azure (bonus)
+CI/CD	Jenkins, GitHub Actions, ArgoCD
+Observability	Prometheus, Grafana, Loki, CloudWatch
+Automation	Golang (must), Python, Bash
+Security	IAM, RBAC, Keycloak, SSO
+Practices	GitOps, SRE, High Availability, MTTR reduction
+Mindset	Open-source, ownership, remote-first culture
