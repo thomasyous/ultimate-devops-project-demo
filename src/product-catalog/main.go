@@ -316,5 +316,5 @@ func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error)
 	)
 }
 
-// This is temp line for changes.
+// This is temp line.
 
