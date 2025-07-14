@@ -46,8 +46,7 @@ jobs:
         - name: Run golangci-lint
           uses: golangci/golangci-lint-action@v6
           with:
-            version: v1.55.2
-            run: golangci-lint run
+            version: latest
             working-directory: src/product-catalog
 
     docker:
