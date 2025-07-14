@@ -48,6 +48,7 @@ jobs:
           with:
             version: latest
             working-directory: src/product-catalog
+            args: run ./...
 
     docker:
         runs-on: ubuntu-latest
