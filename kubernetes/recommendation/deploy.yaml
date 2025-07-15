@@ -1,5 +1,5 @@
----
-# Source: opentelemetry-demo/templates/component.yaml
+# this is deploy file for recommendation service
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,15 +14,13 @@ metadata:
     app.kubernetes.io/part-of: opentelemetry-demo
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 7
   selector:
     matchLabels:
-      
       opentelemetry.io/name: opentelemetry-demo-recommendationservice
   template:
     metadata:
       labels:
-        
         opentelemetry.io/name: opentelemetry-demo-recommendationservice
         app.kubernetes.io/instance: opentelemetry-demo
         app.kubernetes.io/component: recommendationservice
@@ -31,7 +29,7 @@ spec:
       serviceAccountName: opentelemetry-demo
       containers:
         - name: recommendationservice
-          image: 'ghcr.io/open-telemetry/demo:1.12.0-recommendationservice'
+          image: 'shudhodhan/recommendation-micro-service:v2'
           imagePullPolicy: IfNotPresent
           ports:
             
@@ -49,7 +47,7 @@ spec:
               value: cumulative
             - name: RECOMMENDATION_SERVICE_PORT
               value: "8080"
-            - name: PRODUCT_CATALOG_SERVICE_ADDR
+            - name: PRODUCT_CATALOG_ADDR
               value: 'opentelemetry-demo-productcatalogservice:8080'
             - name: OTEL_PYTHON_LOG_CORRELATION
               value: "true"

@@ -1,5 +1,5 @@
----
-# Source: opentelemetry-demo/templates/component.yaml
+# this is deploy file for product-catalog service
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +14,7 @@ metadata:
     app.kubernetes.io/part-of: opentelemetry-demo
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 7
   selector:
     matchLabels:
       
@@ -31,7 +31,7 @@ spec:
       serviceAccountName: opentelemetry-demo
       containers:
         - name: productcatalogservice
-          image: abhishekf5/product-catalog:13134113508
+          image: 'shudhodhan/product-catalog-micro-service:v2'
           imagePullPolicy: IfNotPresent
           ports:
             

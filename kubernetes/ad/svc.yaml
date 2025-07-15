@@ -1,5 +1,4 @@
----
-# Source: opentelemetry-demo/templates/component.yaml
+# service file for the ad-micro-service
 apiVersion: v1
 kind: Service
 metadata:
