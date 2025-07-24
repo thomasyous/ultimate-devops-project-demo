@@ -67,7 +67,7 @@ jobs:
           context: src/product-catalog
           file: src/product-catalog/Dockerfile
           push: true
-          tags: pratyusha687/product-catalog:${{ github.run_id }}
+          tags: prathyusha687/product-catalog:${{ github.run_id }}
 
   updatek8s:
     runs-on: ubuntu-latest
