@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 env:
-  DOCKER_IMAGE: your-dockerhub-username/product-catalog
+  DOCKER_IMAGE: leninfitfreak/product-catalog
   PRODUCT_CATALOG_PORT: 8088
   SERVICE_PATH: src/product-catalog
   K8S_DEPLOY_FILE: kubernetes/productcatalog/deploy.yaml
