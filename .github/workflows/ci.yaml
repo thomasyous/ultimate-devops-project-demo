@@ -152,15 +152,12 @@ jobs:
           name: product-catalog-binary
           path: ${{ env.SERVICE_PATH }}
 
-      - name: Get Build Version
+      - name: Set Docker Tag
         id: vars
         run: |
-          VERSION=build-${GITHUB_RUN_NUMBER}
-          RUN_ID_TAG=run-${GITHUB_RUN_ID}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "RUN_ID_TAG=$RUN_ID_TAG" >> $GITHUB_ENV
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "runid=$RUN_ID_TAG" >> $GITHUB_OUTPUT
+          TAG=run-${GITHUB_RUN_ID}
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
 
       - name: Docker Login
         uses: docker/login-action@v2
@@ -168,26 +165,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build and Tag Docker Image
+      - name: Build and Push Docker Image
         working-directory: ${{ env.SERVICE_PATH }}
         run: |
-          docker build -t ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }} .
-          docker tag ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }} ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.runid }}
-          docker tag ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }} ${{ env.DOCKER_IMAGE }}:latest
+          docker build -t ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.tag }} .
+          docker push ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.tag }}
 
-      - name: Push Docker Image
-        run: |
-          docker push ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }}
-          docker push ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.runid }}
-          docker push ${{ env.DOCKER_IMAGE }}:latest
-
-      - name: Save Build Version
-        run: echo "${{ steps.vars.outputs.version }}" > build-version.txt
+      - name: Save Docker Tag
+        run: echo "${{ steps.vars.outputs.tag }}" > docker-tag.txt
 
       - uses: actions/upload-artifact@v4
         with:
-          name: build-version
-          path: build-version.txt
+          name: docker-tag
+          path: docker-tag.txt
 
   # ---------------------
   # 6. Update Kubernetes Manifest
@@ -203,19 +193,19 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: build-version
+          name: docker-tag
           path: .
 
-      - name: Load Build Version
+      - name: Load Docker Tag
         run: |
-          VERSION=$(cat build-version.txt)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Using VERSION=$VERSION"
+          TAG=$(cat docker-tag.txt)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo "Using TAG=$TAG"
 
       - name: Update Kubernetes Manifest
         run: |
-          sed -i "s|image: .*|image: ${{ env.DOCKER_IMAGE }}:${VERSION}|" ${{ env.K8S_DEPLOY_FILE }}
-          echo "Updated image in ${{ env.K8S_DEPLOY_FILE }} to ${{ env.DOCKER_IMAGE }}:${VERSION}"
+          sed -i "s|image: .*|image: ${{ env.DOCKER_IMAGE }}:${TAG}|" ${{ env.K8S_DEPLOY_FILE }}
+          echo "Updated image in ${{ env.K8S_DEPLOY_FILE }} to ${{ env.DOCKER_IMAGE }}:${TAG}"
 
       - name: Commit and Push Updated Manifest
         env:
@@ -224,5 +214,5 @@ jobs:
           git config user.name "lenin"
           git config user.email "leninfitfreak@gmail.com"
           git add ${{ env.K8S_DEPLOY_FILE }}
-          git commit -m "Update image tag to ${VERSION} [CI SKIP]" || echo "No changes to commit"
+          git commit -m "Update image tag to ${TAG} [CI SKIP]" || echo "No changes to commit"
           git push origin main
