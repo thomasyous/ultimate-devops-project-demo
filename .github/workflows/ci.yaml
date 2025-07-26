@@ -141,45 +141,49 @@ jobs:
   # 5. Docker Build & Push
   # ---------------------
   docker-build-push:
-    runs-on: ubuntu-latest
-    needs: [build-binary]
-    if: always()
-    steps:
-      - uses: actions/checkout@v4
+  runs-on: ubuntu-latest
+  needs: [build-binary]
+  if: always()
+  steps:
+    - uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: product-catalog-binary
-          path: ${{ env.SERVICE_PATH }}
+    - uses: actions/download-artifact@v4
+      with:
+        name: product-catalog-binary
+        path: ${{ env.SERVICE_PATH }}
 
-      - name: Get Build Version
-        id: vars
-        run: |
-          VERSION=build-${GITHUB_RUN_NUMBER}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+    - name: Get Build Version
+      id: vars
+      run: |
+        VERSION=build-${GITHUB_RUN_NUMBER}
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+    - name: Docker Login
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build and Tag Docker Image
-        working-directory: ${{ env.SERVICE_PATH }}
-        run: |
-          docker build -t ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }} .
-          docker tag ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }} ${{ env.DOCKER_IMAGE }}:latest
+    - name: Build and Tag Docker Image
+      working-directory: ${{ env.SERVICE_PATH }}
+      run: |
+        docker build -t ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }} .
+        docker tag ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }} ${{ env.DOCKER_IMAGE }}:latest
 
-      - name: Push Docker Image
-        run: |
-          docker push ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }}
-          docker push ${{ env.DOCKER_IMAGE }}:latest
+    - name: Push Docker Image
+      run: |
+        docker push ${{ env.DOCKER_IMAGE }}:${{ steps.vars.outputs.version }}
+        docker push ${{ env.DOCKER_IMAGE }}:latest
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: build-version
-          path: $GITHUB_ENV
+    - name: Save Build Version
+      run: echo "${{ steps.vars.outputs.version }}" > build-version.txt
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: build-version
+        path: build-version.txt
+
 
   # ---------------------
   # 6. Update Kubernetes Manifest
