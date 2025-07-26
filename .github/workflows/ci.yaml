@@ -29,7 +29,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.23.x"
+          go-version: "1.24.x"
           check-latest: true
 
       - name: Check Go Version
@@ -56,7 +56,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.23.x"
+          go-version: "1.24.x"
           check-latest: true
 
       - name: Check Go Version
@@ -80,7 +80,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.23.x"
+          go-version: "1.24.x"
           check-latest: true
 
       - name: Check Go Version
@@ -104,7 +104,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.23.x"
+          go-version: "1.24.x"
           check-latest: true
 
       - name: Check Go Version
