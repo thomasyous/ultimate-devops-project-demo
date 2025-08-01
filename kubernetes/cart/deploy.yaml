@@ -23,7 +23,7 @@ spec:
     metadata:
       labels:
         
-        opentelemetry.io/name: opentelemetry-demo-cartservic
+        opentelemetry.io/name: opentelemetry-demo-cartservice
         app.kubernetes.io/instance: opentelemetry-demo
         app.kubernetes.io/component: cartservice
         app.kubernetes.io/name: opentelemetry-demo-cartservice
