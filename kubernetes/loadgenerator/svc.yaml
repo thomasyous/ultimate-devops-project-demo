@@ -20,4 +20,4 @@ spec:
       targetPort: 8089
   selector:
     
-    opentelemetry.io/name: opentelemetry-demo-loadgenerato
+    opentelemetry.io/name: opentelemetry-demo-loadgenerator
