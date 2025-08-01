@@ -110,4 +110,4 @@ spec:
           emptyDir: {}
         - configMap:
             name: 'opentelemetry-demo-flagd-config'
-          name: config-ro
+          name: config-r
