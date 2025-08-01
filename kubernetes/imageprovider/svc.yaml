@@ -20,4 +20,4 @@ spec:
       targetPort: 8081
   selector:
     
-    opentelemetry.io/name: opentelemetry-demo-imageprovider
+    opentelemetry.io/name: opentelemetry-demo-imageprovide
