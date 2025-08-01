@@ -20,4 +20,4 @@ spec:
       targetPort: 8080
   selector:
     
-    opentelemetry.io/name: opentelemetry-demo-cartservice
+    opentelemetry.io/name: opentelemetry-demo-cartservic
