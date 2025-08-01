@@ -3,7 +3,7 @@
 .github
 docs
 internal
-src/*/README.m
+src/*/README.md
 src/*/Dockerfile
 src/*/*/Dockerfile
 
