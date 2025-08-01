@@ -23,4 +23,4 @@ spec:
       targetPort: 4000
   selector:
     
-    opentelemetry.io/name: opentelemetry-demo-flag
+    opentelemetry.io/name: opentelemetry-demo-flagd
