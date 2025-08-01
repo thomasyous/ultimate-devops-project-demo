@@ -823,4 +823,4 @@ services:
       interval: 5s
       timeout: 30s
       retries: 10
-    logging: *loggin
+    logging: *logging
