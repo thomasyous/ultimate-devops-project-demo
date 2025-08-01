@@ -23,4 +23,4 @@ spec:
       targetPort: 9093
   selector:
     
-    opentelemetry.io/name: opentelemetry-demo-kafk
+    opentelemetry.io/name: opentelemetry-demo-kafka
