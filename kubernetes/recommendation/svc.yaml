@@ -20,4 +20,4 @@ spec:
       targetPort: 8080
   selector:
     
-    opentelemetry.io/name: opentelemetry-demo-recommendationservic
+    opentelemetry.io/name: opentelemetry-demo-recommendationservice
