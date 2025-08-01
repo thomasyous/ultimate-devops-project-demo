@@ -6,7 +6,7 @@ metadata:
   name: opentelemetry-demo-valkey
   labels:
     
-    opentelemetry.io/name: opentelemetry-demo-valke
+    opentelemetry.io/name: opentelemetry-demo-valkey
     app.kubernetes.io/instance: opentelemetry-demo
     app.kubernetes.io/component: valkey
     app.kubernetes.io/name: opentelemetry-demo-valkey
