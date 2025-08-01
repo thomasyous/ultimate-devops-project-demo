@@ -20,4 +20,4 @@ spec:
       targetPort: 8080
   selector:
     
-    opentelemetry.io/name: opentelemetry-demo-paymentservice
+    opentelemetry.io/name: opentelemetry-demo-paymentservic
