@@ -1,31 +1,34 @@
+# ------------ Stage 1: Build -------------
 FROM golang:1.22-alpine AS builder
 
-WORKDIR /usr/src/app/
+WORKDIR /usr/src/app
 
-# Use Go build cache for dependencies
-RUN --mount=type=cache,target=/go/pkg/mod \
-    --mount=type=cache,target=/root/.cache/go-build \
-    mkdir -p /root/.cache/go-build
-
-# Copy
-COPY go.mod go.sum ./
-
-# Download
-RUN go mod download
-
-# Copy the rest of the source code
+# Copy all source files
 COPY . .
 
-RUN go build -o product-catalog .
+# Download dependencies (optional but recommended)
+RUN go mod download
 
-####################################
+# Build the Go binary
+RUN go build -o product-catalog ./
 
+
+# ------------ Stage 2: Release -------------
 FROM alpine AS release
 
-WORKDIR /usr/src/app/
+WORKDIR /usr/src/app
 
-COPY ./products/ ./products/
-COPY --from=builder /usr/src/app/product-catalog/ ./
+# Copy products folder for JSON input
+COPY ./products ./products
 
-ENV PRODUCT_CATALOG_PORT 8088
-ENTRYPOINT [ "./product-catalog" ]
+# Copy built binary from builder stage
+COPY --from=builder /usr/src/app/product-catalog ./
+
+# Set required environment variable
+ENV PRODUCT_CATALOG_PORT=8088
+
+# Start the application
+ENTRYPOINT ["./product-catalog"]
+
+
+
