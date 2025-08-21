@@ -1,24 +1,24 @@
-variable "aws_cidr" {
-  description = "The CIDR block for the VPC"
+variable "vpc_cidr" {
+  description = "CIDR block for VPC"
   type        = string
 }
 
-variable "cluster_name" {
-  description = "The name of the EKS cluster"
-  type        = string
+variable "availability_zones" {
+  description = "Availability zones"
+  type        = list(string)
 }
 
 variable "private_subnet_cidrs" {
-  description = "CIDR blocks for the private subnets"
+  description = "CIDR blocks for private subnets"
   type        = list(string)
 }
 
 variable "public_subnet_cidrs" {
-  description = "CIDR blocks for the public subnets"
+  description = "CIDR blocks for public subnets"
   type        = list(string)
 }
 
-variable "availability_zones" {
-  description = "Availability zones for the subnets"
-  type        = list(string)  
+variable "cluster_name" {
+  description = "Name of the EKS cluster"
+  type        = string
 }
