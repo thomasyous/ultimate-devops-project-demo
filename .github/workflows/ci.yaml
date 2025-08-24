@@ -97,5 +97,5 @@ jobs:
             git config --global user.email "sunayanagaikwad1536@gmail.com"
             git config --global user.name "Sunayana Gaikwad"
             git add kubernetes/productcatalog/deploy.yaml
-            git commit -m "[CI-1]: Update product catalog image tag"
+            git commit -m "[CI]: Update product catalog image tag"
             git push origin HEAD:main -f
