@@ -1,0 +1,59 @@
+name: Check Old Pull Requests
+
+on:
+  workflow_dispatch:      # Allow manual run from Actions tab
+
+jobs:
+  check-prs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Check old pull requests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_FULL: ${{ github.repository }}   # e.g. owner/repo
+        run: |
+          OWNER=$(echo "$REPO_FULL" | cut -d'/' -f1)
+          REPO=$(echo "$REPO_FULL" | cut -d'/' -f2)
+
+          echo "🔎 Checking all open PRs in $OWNER/$REPO"
+
+          # Cutoff date = 2 months ago
+          CUTOFF_DATE=$(date -d "2 months ago" --utc +%Y-%m-%dT%H:%M:%SZ)
+
+          page=1
+          total_flagged=0
+
+          while :; do
+            prs=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              "https://api.github.com/repos/$OWNER/$REPO/pulls?state=open&per_page=100&page=$page")
+
+            [ "$(echo "$prs" | jq length)" -eq 0 ] && break
+
+            echo "$prs" | jq -c '.[]' | while read -r pr; do
+              pr_number=$(echo "$pr" | jq -r '.number')
+              pr_user=$(echo "$pr" | jq -r '.user.login')
+              created_at=$(echo "$pr" | jq -r '.created_at')
+
+              if [[ "$created_at" < "$CUTOFF_DATE" ]]; then
+                echo "⚠️ PR #$pr_number by @$pr_user is older than 2 months (created at $created_at)"
+                total_flagged=$((total_flagged+1))
+
+                # Notify PR author
+                curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" \
+                  -H "Content-Type: application/json" \
+                  -d "{\"body\": \"Hi @$pr_user 👋, this pull request has been open for more than 2 months (created: $created_at). Please update or close it, otherwise it may be auto-merged with main.\"}" \
+                  "https://api.github.com/repos/$OWNER/$REPO/issues/$pr_number/comments" > /dev/null
+              fi
+            done
+
+            page=$((page+1))
+          done
+
+          echo "✅ Finished scanning. Total flagged PRs: $total_flagged"
