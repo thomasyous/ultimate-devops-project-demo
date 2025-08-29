@@ -38,10 +38,11 @@ jobs:
 
             [ "$(echo "$prs" | jq length)" -eq 0 ] && break
 
-            echo "$prs" | jq -c '.[]' | while read -r pr; do
-              pr_number=$(echo "$pr" | jq -r '.number')
-              pr_user=$(echo "$pr" | jq -r '.user.login')
-              created_at=$(echo "$pr" | jq -r '.created_at')
+            # Loop safely (avoid subshell issues)
+            for row in $(echo "$prs" | jq -c '.[]'); do
+              pr_number=$(echo "$row" | jq -r '.number')
+              pr_user=$(echo "$row" | jq -r '.user.login')
+              created_at=$(echo "$row" | jq -r '.created_at')
 
               if [[ "$created_at" < "$CUTOFF_DATE" ]]; then
                 echo "⚠️ PR #$pr_number by @$pr_user is older than 2 months (created at $created_at)"
