@@ -46,7 +46,7 @@ jobs:
         - name: Run golangci-lint
           uses: golangci/golangci-lint-action@v6
           with:
-            version: v1.55.2
+            version: v1.56.2
             run: golangci-lint run
             working-directory: src/product-catalog
 
@@ -69,7 +69,7 @@ jobs:
             password: ${{ secrets.DOCKER_TOKEN }}
 
         - name: Docker Push
-          uses: docker/build-push-action@v6
+          uses: docker/build-push-action@v6  # build and push the Docker image
           with:
             context: src/product-catalog
             file: src/product-catalog/Dockerfile
@@ -94,8 +94,8 @@ jobs:
         
         - name: Commit and push changes
           run: |
-            git config --global user.email "abhishek@gmail.com"
-            git config --global user.name "Abhishek Veeramalla"
+            git config --global user.email "thomasyus@yahoo.com"  
+            git config --global user.name "thomasyous"
             git add kubernetes/productcatalog/deploy.yaml
             git commit -m "[CI]: Update product catalog image tag"
             git push origin HEAD:main -f
