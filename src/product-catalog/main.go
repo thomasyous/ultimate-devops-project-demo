@@ -325,3 +325,4 @@ func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error)
 // PR workflow trigger
 // trigger again
 // retrigger after fixing secrets
+// retrigger after setting Docker Hub token
