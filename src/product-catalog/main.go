@@ -1,7 +1,7 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 // Dummy change to test CI pipeline
-//joj 111
+//joj 111 y
 package main
 
 //go:generate go install google.golang.org/protobuf/cmd/protoc-gen-go
