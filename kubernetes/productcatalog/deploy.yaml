@@ -5,7 +5,7 @@ kind: Deployment
 metadata:
   name: opentelemetry-demo-productcatalogservice
   labels:
-    
+
     opentelemetry.io/name: opentelemetry-demo-productcatalogservice
     app.kubernetes.io/instance: opentelemetry-demo
     app.kubernetes.io/component: productcatalogservice
@@ -17,12 +17,12 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      
+
       opentelemetry.io/name: opentelemetry-demo-productcatalogservice
   template:
     metadata:
       labels:
-        
+
         opentelemetry.io/name: opentelemetry-demo-productcatalogservice
         app.kubernetes.io/instance: opentelemetry-demo
         app.kubernetes.io/component: productcatalogservice
@@ -31,10 +31,9 @@ spec:
       serviceAccountName: opentelemetry-demo
       containers:
         - name: productcatalogservice
-          image: abhishekf5/product-catalog:13134113508
+          image: andynze4/product-catalog:00f460
           imagePullPolicy: IfNotPresent
           ports:
-            
             - containerPort: 8080
               name: service
           env:
@@ -60,5 +59,7 @@ spec:
           resources:
             limits:
               memory: 20Mi
-          volumeMounts:
-      volumes:
+              cpu: 200m
+            requests:
+              memory: 10Mi
+              cpu: 100m

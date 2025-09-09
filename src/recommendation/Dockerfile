@@ -2,15 +2,31 @@ FROM python:3.12-slim-bookworm AS base
 
 WORKDIR /usr/src/app
 
+# Install build tools and cleanup after installation
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    gcc \
+    libffi-dev \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements and install Python dependencies
 COPY requirements.txt ./
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-
+# Copy application source
 COPY . .
 
-RUN opentelemetry-bootstrap -a install 
+# Install OpenTelemetry auto-instrumentation if used
+RUN opentelemetry-bootstrap -a install || true
 
-ENV RECOMMENDATION_PORT 1010
+# Expose port (optional but good for documentation)
+EXPOSE 1010
 
-ENTRYPOINT ["python", "recommendation_server.py"]
+# Declare runtime environment variable
+ENV RECOMMENDATION_PORT=1010
+
+# Start the service
+ENTRYPOINT [ "python", "recommendation_server.py" ]

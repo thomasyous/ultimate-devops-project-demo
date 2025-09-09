@@ -866,7 +866,7 @@ spec:
           ports:
             
             - containerPort: 8013
-              name: service
+              name: flagd
           env:
             - name: OTEL_SERVICE_NAME
               valueFrom:
@@ -895,7 +895,7 @@ spec:
           ports:
             
             - containerPort: 4000
-              name: service
+              name: flagdui
           env:
             - name: OTEL_SERVICE_NAME
               valueFrom:
