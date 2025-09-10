@@ -1,4 +1,5 @@
-# CI for Product Catalog Service
+# CI for Product Catalog Service    
+# This workflow builds the product catalog service, runs unit tests, performs code quality checks, builds a Docker image, and updates the Kubernetes deployment manifest with the new image tag.
 
 name: product-catalog-ci
 
@@ -99,10 +100,3 @@ jobs:
             git add kubernetes/productcatalog/deploy.yaml
             git commit -m "[CI]: Update product catalog image tag"
             git push origin HEAD:main -f
-
-        
-        
-          
-
-
-        
