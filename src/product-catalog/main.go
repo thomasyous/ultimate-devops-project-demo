@@ -1,4 +1,4 @@
-// Copyright The OpenTelemetry Authors
+// / Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 package main
 
@@ -315,8 +315,3 @@ func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error)
 		grpc.WithStatsHandler(otelgrpc.NewClientHandler()),
 	)
 }
-
-
-
-
-
