@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: dhanvantari-deployment
+spec:
+  template:
+    metadata: 
+      labels:
+        project: dhanvantari 
+    spec:
+      containers:
+        - name: dhanvantari-container
+          image: 637423582993.dkr.ecr.us-west-2.amazonaws.com/dhanvantari/project-images:latest
+
+  selector:
+    matchLabels:
+      project: dhanvantari
