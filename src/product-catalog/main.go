@@ -316,6 +316,6 @@ func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error)
 	)
 }
 
-//#SetTextMapPropagator
+/end of file
 
 
