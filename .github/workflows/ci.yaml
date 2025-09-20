@@ -5,7 +5,8 @@ name: product-catalog-ci
 on: 
     pull_request:
         branches:
-        - main
+        #- main
+        - develop
 
 jobs:
     build:
