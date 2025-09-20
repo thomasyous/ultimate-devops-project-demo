@@ -5,12 +5,7 @@ name: product-catalog-ci
 on: 
     pull_request:
         branches:
-        - main
-    
-permissions:
-  contents: read
-  packages: write
-        
+        - main 
 
 jobs:
     build:
