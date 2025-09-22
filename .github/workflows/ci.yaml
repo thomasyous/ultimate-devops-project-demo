@@ -42,7 +42,7 @@ jobs:
           uses: actions/setup-go@v2
           with:
            go-version: 1.22
-           #cache: true
+           cache: true
         
         - name: Run golangci-lint
           uses: golangci/golangci-lint-action@v6
@@ -95,8 +95,8 @@ jobs:
         
         - name: Commit and push changes
           run: |
-            git config --global user.email "abhishek@gmail.com"
-            git config --global user.name "Abhishek Veeramalla"
+            git config --global user.email "thomasyus@yahoo.com"
+            git config --global user.name "thomasyous"
             git add kubernetes/productcatalog/deploy.yaml
             git commit -m "[CI]: Update product catalog image tag"
             git push origin HEAD:main -f
